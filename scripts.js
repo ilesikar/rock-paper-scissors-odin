@@ -8,18 +8,18 @@ function computerPlay () {
 function playRound(playerSelection, computerSelection) {
     playerSelection.toLowerCase();
     if (playerSelection == "rock") {
-        return computerSelection == "Rock" ? "tie! rock v rock"
+        return computerSelection == "Rock" ? "tie! rock vs rock"
         : computerSelection == "Paper" ? "computer wins! rock loses to scissors"
         : "you win! rock beats scissors"
     } else if (playerSelection == "paper") {
         return computerSelection == "Rock" ? "you win! paper beats rock"
-        : computerSelection == "Paper"? "tie! paper v paper"
+        : computerSelection == "Paper"? "tie! paper vs paper"
         : "computer wins! paper loses to scissors";
     } else if (playerSelection == "scissors") {
-        return computerSelection == "Rock" ? "you lose! scissors lose to rock!"
+        return computerSelection == "Rock" ? "computer wins! scissors lose to rock!"
         : computerSelection == "Paper" ? "you win! scissors beat paper!"
-        : "tie! scissors v scissors";
-    } else return `${playerSelection} is not a valid input`;
+        : "tie! scissors vs scissors";
+    } else return `"${playerSelection}" is not a valid input`;
 }
 
 function game() {
@@ -30,4 +30,14 @@ function game() {
     }
 }
 
-game();
+function ready(callback){
+    if (document.readyState!='loading') callback();
+    else if (document.addEventListener) document.addEventListener('DOMContentLoaded', callback);
+    else document.attachEvent('onreadystatechange', function(){
+        if (document.readyState=='complete') callback();
+    });
+}
+
+ready(function(){
+    game();
+});
