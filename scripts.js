@@ -1,3 +1,6 @@
+let playerScore = 0;
+let computerScore = 0;
+
 function computerPlay () {
     const choice = Math.floor(Math.random() * 3);
     return choice == 0 ? "Rock"
@@ -5,20 +8,58 @@ function computerPlay () {
     : "Scissors";
 }
 
+function incrementScore (winner) {
+    if (winner === 'player') {
+        playerScore++;
+    } else if (winner = 'computer') {
+        computerScore++;
+    }
+}
+
+function choseRock (computerSelection) {
+    if (computerSelection == 'Rock') {
+        return ('Tie: Rock vs Rock.');
+    } else if (computerSelection == 'Paper') {
+        incrementScore('computer');
+        return ('You Lose: Paper smothers Rock.');
+    } else if (computerSelection == 'Scissors') {
+        incrementScore('player');
+        return ('You Win!: Rock smashes Scissors!');
+    }
+}
+
+function chosePaper (computerSelection) {
+    if (computerSelection == 'Rock') {
+        incrementScore('player')
+        return ('You Win!: Paper smothers Rock!');
+    } else if (computerSelection == 'Paper') {
+        return ('Tie: Paper vs Paper.');
+    } else if (computerSelection == 'Scissors') {
+        incrementScore('computer');
+        return ('You Lose: Scissors cut Paper.');
+    }
+}
+
+function choseScissors (computerSelection) {
+    if (computerSelection == 'Rock') {
+        incrementScore('computer')
+        return ('You Lose: Rock smashes Scissors');
+    } else if (computerSelection == 'Paper') {
+        incrementScore('player');
+        return ('You Win!: Scissors cut Paper.');
+    } else if (computerSelection == 'Scissors') {
+        return ('Tie: Scissors vs Scissors.');
+    }
+}
+
 function playRound(playerSelection, computerSelection) {
     playerSelection.toLowerCase();
     if (playerSelection == "rock") {
-        return computerSelection == "Rock" ? "tie! rock vs rock"
-        : computerSelection == "Paper" ? "computer wins! rock loses to scissors"
-        : "you win! rock beats scissors"
+        return choseRock(computerSelection);
     } else if (playerSelection == "paper") {
-        return computerSelection == "Rock" ? "you win! paper beats rock"
-        : computerSelection == "Paper"? "tie! paper vs paper"
-        : "computer wins! paper loses to scissors";
+        return chosePaper(computerSelection);
     } else if (playerSelection == "scissors") {
-        return computerSelection == "Rock" ? "computer wins! scissors lose to rock!"
-        : computerSelection == "Paper" ? "you win! scissors beat paper!"
-        : "tie! scissors vs scissors";
+        return choseScissors(computerSelection);
     } else return `"${playerSelection}" is not a valid input`;
 }
 
@@ -30,6 +71,18 @@ function game() {
     }
 }
 
+function handleClicked(e) {
+    const result = playRound(e.target.id, computerPlay());
+    const results = document.querySelector(".results");
+    const playerElement = document.querySelector("#player-score");
+    playerElement.innerHTML = `<p>Player: ${playerScore}</p>`;
+    const computerElement = document.querySelector("#computer-score");
+    computerElement.innerHTML = `<p>Computer: ${computerScore}</p>`;
+    const newElement = document.createElement("p");
+    newElement.innerHTML = `<p>${result}</p>`;
+    results.appendChild(newElement);
+}
+
 function ready(callback){
     if (document.readyState!='loading') callback();
     else if (document.addEventListener) document.addEventListener('DOMContentLoaded', callback);
@@ -39,5 +92,11 @@ function ready(callback){
 }
 
 ready(function(){
-    game();
+    const buttons = document.querySelectorAll('button');
+    for (button of buttons) {
+        button.addEventListener('click', e => {
+            handleClicked(e);
+        })
+    }
+    
 });
