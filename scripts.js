@@ -8,6 +8,24 @@ function computerPlay () {
     : "Scissors";
 }
 
+function gameOver (results, playerElement, computerElement) {
+    if (playerScore === 5) {
+        window.alert(`You won! Score: ${playerScore} to ${computerScore}`);
+        playerScore = 0;
+        computerScore = 0;
+        results.innerHTML = "";
+        playerElement.innerHTML = "<p>Player: 0</p>";
+        computerElement.innerHTML = "<p>Computer: 0</p>";
+    } else if (computerScore === 5) {
+        window.alert(`You lost! Score: ${playerScore} to ${computerScore}`);
+        playerScore = 0;
+        computerScore = 0;
+        results.innerHTML = "";
+        playerElement.innerHTML = "<p>Player: 0</p>";
+        computerElement.innerHTML = "<p>Computer: 0</p>";
+    }
+}
+
 function incrementScore (winner) {
     if (winner === 'player') {
         playerScore++;
@@ -81,6 +99,7 @@ function handleClicked(e) {
     const newElement = document.createElement("p");
     newElement.innerHTML = `<p>${result}</p>`;
     results.appendChild(newElement);
+    gameOver(results, playerElement, computerElement);
 }
 
 function ready(callback){
