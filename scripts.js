@@ -24,7 +24,7 @@ function playRound(playerSelection, computerSelection) {
 
 function game() {
     for (let x=0; x<5; x++) {
-        const playerSelection = window.prompt("Enter selection");
+        const playerSelection = window.prompt("Enter your selection:");
         const computerSelection = computerPlay();
         console.log(playRound(playerSelection, computerSelection));
     }
